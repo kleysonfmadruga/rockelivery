@@ -7,6 +7,18 @@ defmodule Rockelivery.User do
 
   import Ecto.Changeset
 
+  @type t() :: %__MODULE__{
+    id: Ecto.UUID.t(),
+    age: non_neg_integer(),
+    address: String.t(),
+    cep: String.t(),
+    cpf: String.t(),
+    email: String.t(),
+    password: String.t(),
+    password_hash: String.t(),
+    name: String.t()
+  }
+
   @primary_key {:id, :binary_id, auto_generate: true}
   @required_fields [:age, :address, :cep, :cpf, :email, :password, :name]
 

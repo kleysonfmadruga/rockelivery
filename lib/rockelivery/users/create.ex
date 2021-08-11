@@ -30,7 +30,7 @@ defmodule Rockelivery.Users.Create do
         }
       }}
   """
-  @spec call(Map.t()) :: {:ok, Map.t()} | {:error, %{result: Ecto.Changeset.t(), status: :bad_request}}
+  @spec call(Map.t()) :: {:ok, User.t()} | {:error, %{result: Ecto.Changeset.t(), status: :bad_request}}
   def call(params) do
     params
     |> User.changeset()
