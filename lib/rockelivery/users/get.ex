@@ -32,7 +32,7 @@ defmodule Rockelivery.Users.Get do
           result: "Bad id format"
         }}
   """
-  @spec by_id(UUID.t()) :: {:ok, %User{}} | {:error, %{status: :bad_request | :not_found, result: String.t()}}
+  @spec by_id(UUID.t()) :: {:ok, User.t()} | {:error, %{status: :bad_request | :not_found, result: String.t()}}
   def by_id(id) do
     case UUID.cast(id) do
       :error -> {:error, status: :bad_request, result: "Bad id format"}
