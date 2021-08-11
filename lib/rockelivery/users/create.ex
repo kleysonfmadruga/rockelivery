@@ -21,17 +21,29 @@ defmodule Rockelivery.Users.Create do
       iex> invalid_params = %{name: "Joe", ...}
       iex> Create.call(invalid_params)
       {:error,
-        %Ecto.Changeset{
-          valid?: false,
-          errors: [...],
-          changeset: %{...},
-          ...
+        %{
+          status: :bad_request,
+          result: %Ecto.Changeset{
+            valid?: false,
+            ...
+          }
+        }
       }}
   """
-  @spec call(Map.t()) :: {:ok, Map.t()} | {:error, Ecto.Changeset.t()}
+  @spec call(Map.t()) :: {:ok, Map.t()} | {:error, %{result: Ecto.Changeset.t(), status: :bad_request}}
   def call(params) do
     params
     |> User.changeset()
     |> Repo.insert()
+    |> handle_insert()
+  end
+
+  defp handle_insert({:ok, %User{}} = result), do: result
+
+  defp handle_insert({:error, result}) do
+    {:error, %{
+      status: :bad_request,
+      result: result
+    }}
   end
 end
